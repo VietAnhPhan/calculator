@@ -4,13 +4,13 @@ const container = document.querySelector(".container");
 // inputBox.setAttribute("type", "text");
 // inputBox.placeholder = "0";
 // input.append(inputBox);
-const display = container.querySelector(".display");
 
+const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const buttons = ["display", "AC", "+/-", "%", "/", "7", "8", "9", "*", "4", "5", "6", "-", "1", "2", "3", "+", "0", ".", "="];
 buttons.forEach(button => {
     switch (button) {
         case "display":
-            const display = document.createElement("button");
+            const display = document.createElement("div");
             display.classList.add("display");
             display.textContent = "0";
             container.append(display);
@@ -19,25 +19,29 @@ buttons.forEach(button => {
             const AC = document.createElement("button");
             AC.classList.add("AC");
             AC.textContent = "AC";
+            AC.addEventListener("click", resetCalculator);
             container.append(AC);
             break;
         case "+/-":
             const sign = document.createElement("button");
             sign.classList.add("sign");
             sign.textContent = "+/-";
+            sign.addEventListener("click", addSign);
             container.append(sign);
             break;
         case "%":
             const percent = document.createElement("button");
             percent.classList.add("percent");
             percent.textContent = "%";
+            percent.addEventListener("click", percentOperand)
             container.append(percent);
             break;
         case "/":
-            const operator = document.createElement("button");
-            operator.classList.add("operator");
-            operator.textContent = "/";
-            container.append(operator);
+            const divide = document.createElement("button");
+            divide.classList.add("operator");
+            divide.textContent = "/";
+            divide.addEventListener("click", divideOperand);
+            container.append(divide);
             break;
         case "7":
             const operand7 = document.createElement("button");
@@ -61,6 +65,7 @@ buttons.forEach(button => {
             const multiply = document.createElement("button");
             multiply.classList.add("operator");
             multiply.textContent = "*";
+            multiply.addEventListener("click", multiplyOperand);
             container.append(multiply);
             break;
         case "4":
@@ -85,6 +90,7 @@ buttons.forEach(button => {
             const substract = document.createElement("button");
             substract.classList.add("operator");
             substract.textContent = "-";
+            substract.addEventListener("click", substractOperand);
             container.append(substract);
             break;
         case "1":
@@ -109,11 +115,13 @@ buttons.forEach(button => {
             const add = document.createElement("button");
             add.classList.add("operator");
             add.textContent = "+";
+            add.addEventListener("click", addOperand)
             container.append(add);
             break;
         case "0":
             const operand0 = document.createElement("button");
             operand0.classList.add("zero");
+            operand0.classList.add("operand");
             operand0.textContent = "0";
             container.append(operand0);
             break;
@@ -127,6 +135,7 @@ buttons.forEach(button => {
             const equal = document.createElement("button");
             equal.classList.add("operator");
             equal.textContent = "=";
+            equal.addEventListener("click", equalOperator);
             container.append(equal);
             break;
         // const operand = container.querySelector(".operand");
@@ -134,6 +143,161 @@ buttons.forEach(button => {
     }
 }
 );
+
+const displayBox = container.querySelector(".display");
+const operands = container.querySelectorAll(".operand");
+let prevOperand, nextOperand, operator = ""
+
+operands.forEach((item) => {
+    item.addEventListener("click", display);
+});
+
+
+function display(event) {
+
+    if (displayBox.textContent == "0") {
+        displayBox.textContent = "";
+    }
+
+    if (prevOperand && operator && nextOperand === "") {
+        displayBox.textContent = "";
+
+    }
+    displayBox.textContent += event.currentTarget.textContent;
+
+    if (!operator) {
+        prevOperand = parseFloat(displayBox.textContent);
+    }
+
+    else {
+
+        nextOperand = parseFloat(displayBox.textContent);
+    }
+}
+
+function addOperand(event) {
+    if (operator && prevOperand && nextOperand) {
+        setDisplayBox(prevOperand + nextOperand);
+        prevOperand = parseFloat(getDisplayBox());
+        resetNextOperand();
+    }
+
+    operator = event.currentTarget.textContent;
+
+}
+
+function substractOperand(event) {
+    if (operator && prevOperand && nextOperand) {
+        setDisplayBox(prevOperand - nextOperand);
+        prevOperand = parseFloat(getDisplayBox());
+        resetNextOperand();
+    }
+
+    operator = event.currentTarget.textContent;
+
+}
+
+function multiplyOperand(event) {
+    if (operator && prevOperand && nextOperand) {
+        setDisplayBox(prevOperand * nextOperand);
+        prevOperand = parseFloat(getDisplayBox());
+        resetNextOperand();
+    }
+
+    operator = event.currentTarget.textContent;
+
+}
+
+function divideOperand(event) {
+    if (parseInt(nextOperand) == 0) {
+        setDisplayBox("LMAO");
+        return;
+    }
+    if (operator && prevOperand && nextOperand) {
+        setDisplayBox(prevOperand / nextOperand);
+        prevOperand = parseFloat(getDisplayBox());
+        resetNextOperand();
+    }
+
+    operator = event.currentTarget.textContent;
+
+}
+
+function addSign() {
+    if (!getDisplayBox().includes("-")) {
+        setDisplayBox("-" + getDisplayBox())
+        if (!nextOperand) {
+
+            prevOperand = -1 * prevOperand;
+
+        }
+        else {
+            nextOperand = -1 * nextOperand;
+
+        }
+    }
+    else
+        setDisplayBox(getDisplayBox().slice(1));
+}
+
+function equalOperator(event) {
+    if (prevOperand !== "" && nextOperand !== "" && operator) {
+        switch (operator) {
+            case "+":
+                addOperand(event);
+                break;
+            case "-":
+                substractOperand(event);
+                break;
+            case "*":
+                multiplyOperand(event);
+                break;
+            case "/":
+                divideOperand(event);
+                break;
+            case "%":
+                percentOperand(event);
+                break;
+        }
+    }
+}
+
+function percentOperand(event) {
+    if (operator && prevOperand && nextOperand) {
+        setDisplayBox(prevOperand % nextOperand);
+        prevOperand = parseFloat(getDisplayBox());
+        resetNextOperand();
+    }
+
+    operator = event.currentTarget.textContent;
+}
+
+function resetCalculator() {
+    resetPrevOperand();
+    resetNextOperand();
+    resetOperator();
+    setDisplayBox("0");
+}
+
+function getDisplayBox() {
+    return displayBox.textContent;
+}
+
+function setDisplayBox(input) {
+    displayBox.textContent = input;
+}
+
+function resetPrevOperand() {
+    prevOperand = ""
+}
+
+function resetNextOperand() {
+    nextOperand = "";
+}
+
+function resetOperator() {
+    operator = "";
+}
 // const numbers = container.querySelector(".numbers")
 // const operators = container.querySelector(".operators");
 
