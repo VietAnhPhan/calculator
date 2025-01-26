@@ -2,22 +2,33 @@ body {
     text-align: center;
     font-family: monospace;
 }
-
+.calc{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 90vh;
+    align-items: center;
+}
 .container {
     max-width: 50%;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    gap: 2px;
 
 }
-input{
+
+input {
     width: 100%;
     padding: 10px 0;
     font-size: 2.5rem;
     text-align: right;
 }
+
 .number,
 .operator {
     border: 1px solid grey;
-    
+
 
 }
 
@@ -43,6 +54,35 @@ button:hover {
     background-color: bisque;
 }
 
-input, button{
+input,
+button {
     font-family: monospace;
+}
+
+.display {
+    background-color: #b2b9b7;
+    grid-column: 1/-1;
+    font-size: 2.5em;
+    padding: 5px;
+    text-align: right;
+}
+
+.zero {
+    grid-column: span 2;
+
+}
+
+.AC,
+.percent, .sign {
+    background-color: dodgerblue;
+}
+
+.operator {
+    background-color: #FF8F1F;
+}
+
+.operand,
+.zero,
+.decimal {
+    background-color: #217C7E;
 }
