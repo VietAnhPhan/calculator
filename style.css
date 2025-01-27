@@ -15,24 +15,27 @@ body {
     max-width: 50%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(4, 100px);
-    gap: 2px;
-
+    grid-template-columns: repeat(4, 70px);
+    grid-template-rows: repeat(6, 60px);
+    gap: 15px;
+    padding: 10px;
+    background-color: #333;
+    border-radius: 10px 10px 10px 10px;
 }
 
-input {
+/* input {
     width: 100%;
     padding: 10px 0;
     font-size: 2.5rem;
     text-align: right;
-}
+} */
 
-.number,
+/* .number,
 .operator {
     border: 1px solid grey;
 
 
-}
+} */
 
 .numbers {
     display: grid;
@@ -64,14 +67,19 @@ button {
 .display {
     background-color: #b2b9b7;
     grid-column: 1/-1;
-    font-size: 2.5em;
+    font-size: 3.5em;
     padding: 5px;
     text-align: right;
+    border-radius: 10px 10px 0 0;
 }
 
 .zero {
     grid-column: span 2;
+    border-radius: 0 0 0 10px;
+}
 
+.equal {
+    border-radius: 0 0 10px 0;
 }
 
 /* .AC,
@@ -101,4 +109,27 @@ button {
 
 .green {
     background-color: #217C7E;
+}
+
+.red {
+    background-color: #c00;
+}
+
+.grey {
+    background-color: #666;
+}
+
+.green-light {
+    background-color: #0c0;
+}
+
+.operand, .operator, .AC, .sign, .percent, .decimal {
+    color: white;
+    border: none;
+
+}
+
+.container>button {
+    border-radius: 8px;
+    border: none;
 }

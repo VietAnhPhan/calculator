@@ -13,7 +13,7 @@ buttons.forEach(button => {
         case "AC":
             const AC = document.createElement("button");
             AC.classList.add("AC");
-            AC.classList.add("dodgerblue");
+            AC.classList.add("red");
             AC.textContent = "AC";
             AC.addEventListener("click", resetCalculator);
             container.append(AC);
@@ -46,21 +46,21 @@ buttons.forEach(button => {
         case "7":
             const operand7 = document.createElement("button");
             operand7.classList.add("operand");
-            operand7.classList.add("green");
+            operand7.classList.add("grey");
             operand7.textContent = "7";
             container.append(operand7);
             break;
         case "8":
             const operand8 = document.createElement("button");
             operand8.classList.add("operand");
-            operand8.classList.add("green");
+            operand8.classList.add("grey");
             operand8.textContent = "8";
             container.append(operand8);
             break;
         case "9":
             const operand9 = document.createElement("button");
             operand9.classList.add("operand");
-            operand9.classList.add("green");
+            operand9.classList.add("grey");
             operand9.textContent = "9";
             container.append(operand9);
             break;
@@ -75,21 +75,21 @@ buttons.forEach(button => {
         case "4":
             const operand4 = document.createElement("button");
             operand4.classList.add("operand");
-            operand4.classList.add("green");
+            operand4.classList.add("grey");
             operand4.textContent = "4";
             container.append(operand4);
             break;
         case "5":
             const operand5 = document.createElement("button");
             operand5.classList.add("operand");
-            operand5.classList.add("green");
+            operand5.classList.add("grey");
             operand5.textContent = "5";
             container.append(operand5);
             break;
         case "6":
             const operand6 = document.createElement("button");
             operand6.classList.add("operand");
-            operand6.classList.add("green");
+            operand6.classList.add("grey");
             operand6.textContent = "6";
             container.append(operand6);
             break;
@@ -104,21 +104,21 @@ buttons.forEach(button => {
         case "1":
             const operand1 = document.createElement("button");
             operand1.classList.add("operand");
-            operand1.classList.add("green");
+            operand1.classList.add("grey");
             operand1.textContent = "1";
             container.append(operand1);
             break;
         case "2":
             const operand2 = document.createElement("button");
             operand2.classList.add("operand");
-            operand2.classList.add("green");
+            operand2.classList.add("grey");
             operand2.textContent = "2";
             container.append(operand2);
             break;
         case "3":
             const operand3 = document.createElement("button");
             operand3.classList.add("operand");
-            operand3.classList.add("green");
+            operand3.classList.add("grey");
             operand3.textContent = "3";
             container.append(operand3);
             break;
@@ -134,14 +134,14 @@ buttons.forEach(button => {
             const operand0 = document.createElement("button");
             operand0.classList.add("zero");
             operand0.classList.add("operand");
-            operand0.classList.add("green");
+            operand0.classList.add("grey");
             operand0.textContent = "0";
             container.append(operand0);
             break;
         case ".":
             const decimal = document.createElement("button");
             decimal.classList.add("decimal");
-            decimal.classList.add("green");
+            decimal.classList.add("grey");
             decimal.addEventListener("click", addDecimal);
             decimal.textContent = ".";
             container.append(decimal);
@@ -149,7 +149,8 @@ buttons.forEach(button => {
         case "=":
             const equal = document.createElement("button");
             equal.classList.add("operator");
-            equal.classList.add("orange");
+            equal.classList.add("green-light");
+            equal.classList.add("equal");
             equal.textContent = "=";
             equal.addEventListener("click", equalOperator);
             container.append(equal);
