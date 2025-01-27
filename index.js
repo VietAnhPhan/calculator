@@ -1,9 +1,4 @@
 const container = document.querySelector(".container");
-// const input = container.querySelector(".input");
-// const inputBox = document.createElement("input");
-// inputBox.setAttribute("type", "text");
-// inputBox.placeholder = "0";
-// input.append(inputBox);
 
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const buttons = ["display", "AC", "+/-", "%", "/", "7", "8", "9", "*", "4", "5", "6", "-", "1", "2", "3", "+", "0", ".", "="];
@@ -18,6 +13,7 @@ buttons.forEach(button => {
         case "AC":
             const AC = document.createElement("button");
             AC.classList.add("AC");
+            AC.classList.add("dodgerblue");
             AC.textContent = "AC";
             AC.addEventListener("click", resetCalculator);
             container.append(AC);
@@ -25,6 +21,7 @@ buttons.forEach(button => {
         case "+/-":
             const sign = document.createElement("button");
             sign.classList.add("sign");
+            sign.classList.add("dodgerblue");
             sign.textContent = "+/-";
             sign.addEventListener("click", addSign);
             container.append(sign);
@@ -32,6 +29,7 @@ buttons.forEach(button => {
         case "%":
             const percent = document.createElement("button");
             percent.classList.add("percent");
+            percent.classList.add("dodgerblue");
             percent.textContent = "%";
             percent.addEventListener("click", percentOperand)
             container.append(percent);
@@ -39,6 +37,8 @@ buttons.forEach(button => {
         case "/":
             const divide = document.createElement("button");
             divide.classList.add("operator");
+            divide.classList.add("orange");
+
             divide.textContent = "/";
             divide.addEventListener("click", divideOperand);
             container.append(divide);
@@ -46,24 +46,28 @@ buttons.forEach(button => {
         case "7":
             const operand7 = document.createElement("button");
             operand7.classList.add("operand");
+            operand7.classList.add("green");
             operand7.textContent = "7";
             container.append(operand7);
             break;
         case "8":
             const operand8 = document.createElement("button");
             operand8.classList.add("operand");
+            operand8.classList.add("green");
             operand8.textContent = "8";
             container.append(operand8);
             break;
         case "9":
             const operand9 = document.createElement("button");
             operand9.classList.add("operand");
+            operand9.classList.add("green");
             operand9.textContent = "9";
             container.append(operand9);
             break;
         case "*":
             const multiply = document.createElement("button");
             multiply.classList.add("operator");
+            multiply.classList.add("orange");
             multiply.textContent = "*";
             multiply.addEventListener("click", multiplyOperand);
             container.append(multiply);
@@ -71,24 +75,28 @@ buttons.forEach(button => {
         case "4":
             const operand4 = document.createElement("button");
             operand4.classList.add("operand");
+            operand4.classList.add("green");
             operand4.textContent = "4";
             container.append(operand4);
             break;
         case "5":
             const operand5 = document.createElement("button");
             operand5.classList.add("operand");
+            operand5.classList.add("green");
             operand5.textContent = "5";
             container.append(operand5);
             break;
         case "6":
             const operand6 = document.createElement("button");
             operand6.classList.add("operand");
+            operand6.classList.add("green");
             operand6.textContent = "6";
             container.append(operand6);
             break;
         case "-":
             const substract = document.createElement("button");
             substract.classList.add("operator");
+            substract.classList.add("orange");
             substract.textContent = "-";
             substract.addEventListener("click", substractOperand);
             container.append(substract);
@@ -96,24 +104,28 @@ buttons.forEach(button => {
         case "1":
             const operand1 = document.createElement("button");
             operand1.classList.add("operand");
+            operand1.classList.add("green");
             operand1.textContent = "1";
             container.append(operand1);
             break;
         case "2":
             const operand2 = document.createElement("button");
             operand2.classList.add("operand");
+            operand2.classList.add("green");
             operand2.textContent = "2";
             container.append(operand2);
             break;
         case "3":
             const operand3 = document.createElement("button");
             operand3.classList.add("operand");
+            operand3.classList.add("green");
             operand3.textContent = "3";
             container.append(operand3);
             break;
         case "+":
             const add = document.createElement("button");
             add.classList.add("operator");
+            add.classList.add("orange");
             add.textContent = "+";
             add.addEventListener("click", addOperand)
             container.append(add);
@@ -122,18 +134,22 @@ buttons.forEach(button => {
             const operand0 = document.createElement("button");
             operand0.classList.add("zero");
             operand0.classList.add("operand");
+            operand0.classList.add("green");
             operand0.textContent = "0";
             container.append(operand0);
             break;
         case ".":
             const decimal = document.createElement("button");
             decimal.classList.add("decimal");
+            decimal.classList.add("green");
+            decimal.addEventListener("click", addDecimal);
             decimal.textContent = ".";
             container.append(decimal);
             break;
         case "=":
             const equal = document.createElement("button");
             equal.classList.add("operator");
+            equal.classList.add("orange");
             equal.textContent = "=";
             equal.addEventListener("click", equalOperator);
             container.append(equal);
@@ -155,39 +171,35 @@ operands.forEach((item) => {
 
 function display(event) {
 
-    if (displayBox.textContent == "0") {
-        displayBox.textContent = "";
+    if (getDisplayBox() == "0" || (prevOperand && operator && (nextOperand == "" || !nextOperand))) {
+        setDisplayBox("");
     }
 
-    if (prevOperand && operator && nextOperand === "") {
-        displayBox.textContent = "";
-
-    }
-    displayBox.textContent += event.currentTarget.textContent;
+    setDisplayBox(getDisplayBox() + event.currentTarget.textContent);
 
     if (!operator) {
-        prevOperand = parseFloat(displayBox.textContent);
+        prevOperand = parseFloat(getDisplayBox());
     }
 
     else {
-
-        nextOperand = parseFloat(displayBox.textContent);
+        nextOperand = parseFloat(getDisplayBox());
     }
 }
 
 function addOperand(event) {
-    if (operator && prevOperand && nextOperand) {
-        setDisplayBox(prevOperand + nextOperand);
-        prevOperand = parseFloat(getDisplayBox());
+    if (operator != null && operator != "" && prevOperand != null && prevOperand != "" && nextOperand != null && nextOperand != "") {
+        prevOperand = prevOperand + nextOperand;
+        setDisplayBox(prevOperand);
         resetNextOperand();
     }
-
-    operator = event.currentTarget.textContent;
+    else {
+        operator = event.currentTarget.textContent;
+    }
 
 }
 
 function substractOperand(event) {
-    if (operator && prevOperand && nextOperand) {
+    if (operator != null && operator != "" && prevOperand != null && prevOperand != "" && nextOperand != null && nextOperand != "") {
         setDisplayBox(prevOperand - nextOperand);
         prevOperand = parseFloat(getDisplayBox());
         resetNextOperand();
@@ -198,7 +210,7 @@ function substractOperand(event) {
 }
 
 function multiplyOperand(event) {
-    if (operator && prevOperand && nextOperand) {
+    if (operator != null && operator != "" && prevOperand != null && prevOperand != "" && nextOperand != null && nextOperand != "") {
         setDisplayBox(prevOperand * nextOperand);
         prevOperand = parseFloat(getDisplayBox());
         resetNextOperand();
@@ -213,7 +225,7 @@ function divideOperand(event) {
         setDisplayBox("LMAO");
         return;
     }
-    if (operator && prevOperand && nextOperand) {
+    if (operator != null && operator != "" && prevOperand != null && prevOperand != "" && nextOperand != null && nextOperand != "") {
         setDisplayBox(prevOperand / nextOperand);
         prevOperand = parseFloat(getDisplayBox());
         resetNextOperand();
@@ -241,7 +253,7 @@ function addSign() {
 }
 
 function equalOperator(event) {
-    if (prevOperand !== "" && nextOperand !== "" && operator) {
+    if (operator != null && operator != "" && prevOperand != null && prevOperand != "" && nextOperand != null && nextOperand != "") {
         switch (operator) {
             case "+":
                 addOperand(event);
@@ -263,13 +275,19 @@ function equalOperator(event) {
 }
 
 function percentOperand(event) {
-    if (operator && prevOperand && nextOperand) {
+    if (operator != null && operator != "" && prevOperand != null && prevOperand != "" && nextOperand != null && nextOperand != "") {
         setDisplayBox(prevOperand % nextOperand);
         prevOperand = parseFloat(getDisplayBox());
         resetNextOperand();
     }
 
     operator = event.currentTarget.textContent;
+}
+
+function addDecimal() {
+    if (!getDisplayBox().includes(".")) {
+        setDisplayBox(getDisplayBox() + ".");
+    }
 }
 
 function resetCalculator() {
@@ -298,129 +316,4 @@ function resetNextOperand() {
 function resetOperator() {
     operator = "";
 }
-// const numbers = container.querySelector(".numbers")
-// const operators = container.querySelector(".operators");
 
-// let preInput = "", operatorChoice, nextInput = "";
-
-
-
-// const hiddenOperators = ["=", "AC"];
-// operatorCollection.forEach(operator => {
-//     const operatorButton = document.createElement('button');
-//     switch (operator) {
-//         case '+':
-//         case '-':
-//         case 'x':
-//         case '/':
-//             operatorButton.addEventListener("click", saveOperator);
-//             break;
-//         case '=':
-//             operatorButton.addEventListener("click", calculateOperands);
-//             break;
-//         case 'AC':
-//             operatorButton.addEventListener("click", resetInputBox);
-//             break;
-
-//     }
-//     operatorButton.classList.add("operator");
-//     operatorButton.textContent = operator;
-
-//     operators.append(operatorButton);
-// });
-
-// // hiddenOperators.forEach(item => {
-// //     switch (item) {
-// //         case 'AC':
-// //             inputBox.addEventListener("click", resetInputBox);
-// //             break;
-// //     }
-// // })
-
-// for (let i = 0; i <= 9; i++) {
-//     const number = document.createElement('button');
-//     number.addEventListener("click", displayInput);
-//     number.classList.add("number");
-//     number.textContent = i;
-//     numbers.append(number);
-// }
-
-// function displayInput(input) {
-//     if (operatorChoice && !nextInput) {
-//         inputBox.value = "";
-//         nextInput += input.currentTarget.textContent;
-//         inputBox.value = nextInput;
-//         // nextInput = input.value;
-
-//     } else if (nextInput) {
-//         nextInput += input.currentTarget.textContent;
-//         inputBox.value = nextInput;
-//     }
-
-//     else if (!operatorChoice) {
-//         preInput = '';
-//         if (input.currentTarget.textContent == '0') {
-//             preInput = '';
-//         } else {
-//             preInput += input.currentTarget.textContent;
-
-//         }
-//         inputBox.value = preInput;
-
-//     }
-
-// }
-
-// function calculateOperands() {
-//     // nextInput = parseInt(inputBox.value);
-//     preInput = preInput == '' ? 0 : parseFloat(preInput);
-//     nextInput = nextInput == '' ? 1 : parseFloat(nextInput);
-
-//     switch (operatorChoice) {
-//         case '+':
-//             preInput += nextInput;
-//             inputBox.value = preInput;
-//             nextInput = "";
-//             operatorChoice = "";
-//             break;
-//         case '-':
-//             preInput -= nextInput;
-//             inputBox.value = preInput;
-//             nextInput = "";
-//             operatorChoice = "";
-//             break;
-//         case 'x':
-//             preInput *= nextInput;
-//             inputBox.value = preInput;
-//             nextInput = "";
-//             operatorChoice = "";
-//             break;
-//         case '/':
-//             if (nextInput == 0) {
-//                 preInput = "Lmao";
-//                 inputBox.value = preInput;
-//                 break;
-//             }
-//             preInput /= nextInput;
-//             inputBox.value = preInput;
-//             nextInput = "";
-//             operatorChoice = "";
-//             break;
-//         case 'AC':
-//             resetInputBox();
-//             break;
-//         default: break;;
-//     }
-// }
-// function resetInputBox() {
-//     inputBox.value = "";
-//     preInput = "";
-//     nextInput = "";
-//     operatorChoice = "";
-// }
-
-// function saveOperator(operator) {
-//     operatorChoice = operator.currentTarget.textContent;
-// }
-
-// console.log(calculateOperands(2, 0, '+'));

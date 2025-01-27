@@ -2,13 +2,15 @@ body {
     text-align: center;
     font-family: monospace;
 }
-.calc{
+
+.calc {
     display: flex;
     flex-direction: column;
     justify-content: center;
     min-height: 90vh;
     align-items: center;
 }
+
 .container {
     max-width: 50%;
     margin: 0 auto;
@@ -72,17 +74,31 @@ button {
 
 }
 
-.AC,
-.percent, .sign {
+/* .AC,
+.percent,
+.sign {
+    background-color: dodgerblue;
+} */
+
+.dodgerblue {
     background-color: dodgerblue;
 }
 
-.operator {
+
+/* .operator {
+    background-color: #FF8F1F;
+} */
+
+.orange {
     background-color: #FF8F1F;
 }
 
-.operand,
+/* .operand,
 .zero,
 .decimal {
+    background-color: #217C7E;
+} */
+
+.green {
     background-color: #217C7E;
 }
